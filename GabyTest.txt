@@ -1,0 +1,68 @@
+import org.example.model.Categorie;
+import org.example.model.Produs;
+import org.example.ui.ViewMenu;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import javax.swing.*;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+public class TestGaby {
+    private ViewMenu viewMenu;
+
+    @BeforeEach
+    public void setUp() {
+        viewMenu = new ViewMenu();
+    }
+
+    @Test
+    public void testConstructor_CreeazaComponentaPrincipala() {
+        assertNotNull(viewMenu);
+        assertNotNull(viewMenu.getContentPane());
+    }
+
+    @Test
+    public void testAfiseazaProduse_CategorieCuProduse() {
+
+        assertDoesNotThrow(() -> viewMenu.afiseazaProduse(Categorie.FEL_PRINCIPAL));
+    }
+
+    @Test
+    public void testAfiseazaProduse_CategorieFaraProduse() {
+
+        assertDoesNotThrow(() -> viewMenu.afiseazaProduse(Categorie.BAUTURI_SPIRTOASE));
+    }
+
+    @Test
+    public void testAfiseazaPopUpInformatii_ProdusValid() {
+        Produs produs = new Produs(
+                Categorie.APERITIVE,
+                "Bruschete",
+                12.5,
+                List.of("Pâine", "Roșii", "Ulei de măsline"),
+                true
+        );
+
+
+        assertDoesNotThrow(() -> viewMenu.afiseazaPopUpInformatii(produs));
+    }
+    @Test
+    public void testAdaugaProdusInCos() {
+        ViewMenu viewMenu = new ViewMenu();
+
+
+        Produs produs = new Produs(Categorie.APERITIVE, "Bruschete", 20.0, List.of("Pâine", "Roșii", "Ulei"), true);
+
+
+        viewMenu.cosComanda.adaugaProdus(produs);
+
+        List<Produs> produseInCos = viewMenu.cosComanda.getListaProduse();
+        assertEquals(1, produseInCos.size());
+        assertEquals("Bruschete", produseInCos.get(0).getNume());
+        assertEquals(20.0, viewMenu.cosComanda.getListaProduse().get(0).getPret());
+    }
+
+}
+ss
